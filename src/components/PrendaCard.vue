@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { CATEGORIA_INFO, type Estado, type Medidas, type Prenda } from '@/domain/prenda'
+import { CATEGORIA_INFO, type Color, type Estado, type Medidas, type Prenda } from '@/domain/prenda'
 
 const props = defineProps<{ prenda: Prenda; puedeBorrar: boolean; borrando?: boolean }>()
 defineEmits<{ borrar: [] }>()
@@ -28,6 +28,22 @@ const ESTADO_CLASE: Record<Estado, string> = {
   Regular: 'badge--regular',
 }
 
+// Muestra del color de la prenda: es un dato, no parte del tema, por eso va fijo.
+const MUESTRA_COLOR: Record<Color, string> = {
+  Blanco: '#ffffff',
+  Crudo: '#efe6d2',
+  Rojo: '#c62828',
+  Granate: '#7b1e2b',
+  Morado: '#6a1b9a',
+  Azul: '#1e4f9c',
+  Verde: '#2e7d32',
+  Amarillo: '#f2c230',
+  Ocre: '#c8892b',
+  Marrón: '#6d4c33',
+  Negro: '#1b1b1b',
+  Gris: '#8a8a8a',
+}
+
 const medidas = computed(() => medidasEnPartes(props.prenda.medidas))
 const fecha = computed(() =>
   new Date(props.prenda.creadaEn).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' }),
@@ -44,6 +60,13 @@ const fecha = computed(() =>
       <div v-for="m in medidas" :key="m.etiqueta" class="medida">
         <dt>{{ m.etiqueta }}</dt>
         <dd>{{ m.valor }}</dd>
+      </div>
+      <div v-if="prenda.color" class="medida">
+        <dt>Color</dt>
+        <dd class="color">
+          <span class="color__muestra" :style="{ background: MUESTRA_COLOR[prenda.color] }"></span>
+          {{ prenda.color }}
+        </dd>
       </div>
     </dl>
     <p v-if="prenda.comentario" class="card__comentario">{{ prenda.comentario }}</p>
@@ -138,6 +161,20 @@ const fecha = computed(() =>
   margin: 0;
   font-size: 1.05rem;
   font-weight: 700;
+}
+
+.color {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.color__muestra {
+  width: 14px;
+  height: 14px;
+  flex: none;
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
 }
 
 .card__contacto,

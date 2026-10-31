@@ -8,6 +8,8 @@ interface ImportMetaEnv {
   readonly VITE_MARCA_NOMBRE?: string
   readonly VITE_MARCA_LEMA?: string
   readonly VITE_MARCA_LOGO?: string
+  /** `false` para no sembrar los datos de ejemplo del demo. */
+  readonly VITE_DEMO_DATOS?: string
 }
 
 interface ImportMeta {

@@ -32,8 +32,15 @@ export const CATEGORIAS = [
 ] as const
 export type Categoria = (typeof CATEGORIAS)[number]
 
-export const CATEGORIA_INFO: Record<Categoria, { label: string; medida: TipoMedida }> = {
-  tunica: { label: 'Túnica', medida: 'anchoLargo' },
+export interface InfoCategoria {
+  label: string
+  medida: TipoMedida
+  /** Si al publicar hay que indicar el color. */
+  conColor?: true
+}
+
+export const CATEGORIA_INFO: Record<Categoria, InfoCategoria> = {
+  tunica: { label: 'Túnica', medida: 'anchoLargo', conColor: true },
   coraza: { label: 'Coraza', medida: 'anchoLargo' },
   pechera: { label: 'Pechera', medida: 'anchoLargo' },
   munequeras: { label: 'Muñequeras', medida: 'anchoLargo' },
@@ -42,6 +49,26 @@ export const CATEGORIA_INFO: Record<Categoria, { label: string; medida: TipoMedi
   cinturon: { label: 'Cinturón', medida: 'largo' },
   botas: { label: 'Botas', medida: 'numero' },
   cascos: { label: 'Cascos', medida: 'talla' },
+}
+
+export const COLORES = [
+  'Blanco',
+  'Crudo',
+  'Rojo',
+  'Granate',
+  'Morado',
+  'Azul',
+  'Verde',
+  'Amarillo',
+  'Ocre',
+  'Marrón',
+  'Negro',
+  'Gris',
+] as const
+export type Color = (typeof COLORES)[number]
+
+export function tieneColor(categoria: Categoria): boolean {
+  return !!CATEGORIA_INFO[categoria].conColor
 }
 
 /** Medidas en cm, salvo `numero` (de calzado) y `talla`. */
@@ -59,6 +86,8 @@ export interface Prenda {
   /** Nombre de la persona con la que hay que hablar. */
   contacto: string
   medidas: Medidas
+  /** Solo en las categorías con `conColor` (túnica). */
+  color?: Color
   comentario?: string
   /** Id del usuario que la publicó. */
   publicadaPor: string

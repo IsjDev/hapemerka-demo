@@ -4,7 +4,7 @@ import { esNombreAdmin } from './adminDemo'
 
 const STORAGE_KEY = 'hapemerka:usuarios'
 
-interface CuentaGuardada extends CuentaUsuario {
+export interface CuentaGuardada extends CuentaUsuario {
   salt: string
   passwordHash: string
 }

@@ -18,8 +18,9 @@ Estado actual: demo funcional en Vue 3 + Vite + TypeScript + Vue Router. No hay 
 
 ## Arquitectura
 
-- `src/domain/prenda.ts` — fuente única del modelo de dominio: secciones, categorías (`CATEGORIA_INFO` asocia cada una a su `TipoMedida`), estados y la unión discriminada `Medidas`. Los slugs (`nino`, `munequeras`…) van sin tildes; las etiquetas visibles salen de `SECCION_LABEL` / `CATEGORIA_INFO`. Para añadir una categoría basta con tocar este archivo (y el formulario si es un tipo de medida nuevo).
+- `src/domain/prenda.ts` — fuente única del modelo de dominio: secciones, categorías (`CATEGORIA_INFO` asocia cada una a su `TipoMedida`), estados y la unión discriminada `Medidas`. Los slugs (`nino`, `munequeras`…) van sin tildes; las etiquetas visibles salen de `SECCION_LABEL` / `CATEGORIA_INFO`. El color (`COLORES`, campo opcional `color` de `Prenda`) solo se pide en las categorías con `conColor` en `CATEGORIA_INFO` (de momento, túnica). Para añadir una categoría basta con tocar este archivo (y el formulario si es un tipo de medida nuevo).
 - `src/data/` — capa de datos con tres repositorios (`authRepository`, `prendasRepository`, `usuariosRepository`). Los componentes los importan solo desde `@/data`; las interfaces son asíncronas para que la migración a Supabase consista en cambiar las implementaciones en `src/data/index.ts`. Las actuales (`localStorage*`) usan las claves `hapemerka:prendas`, `hapemerka:usuarios` y `hapemerka:sesion`.
+- Datos de ejemplo: `src/data/localStorageDemoSeed.ts` siembra (una vez por navegador, marcado con `hapemerka:demo`) 24 cuentas de miembros con contraseña `demo123` y ~140 prendas generadas con un PRNG con semilla, publicadas por esas cuentas y por el admin. Se llama desde `src/data/index.ts` antes de crear los repositorios; `VITE_DEMO_DATOS=false` lo desactiva. Para regenerarlos, borrar `hapemerka:demo`, `hapemerka:prendas` y `hapemerka:usuarios`.
 - Orden del listado: también en `src/domain/prenda.ts` (`camposOrden`, `ordenarPrendas`, `parsearOrden`…). Los campos disponibles dependen del `TipoMedida` de la categoría (ancho/largo, largo, número o talla, esta última en el orden de `TALLAS_CASCO`), más fecha y estado; sin categoría solo fecha y estado. Se ordena en el cliente sobre lo que devuelve el repositorio.
 - Rutas (`src/router/index.ts`): `/:seccion` (solo acepta los slugs de `SECCIONES`) con el filtro de categoría en la query `?categoria=` y el orden en `?orden=<campo>-<asc|desc>` (se omite si es el de por defecto, «más recientes»), `/publicar` (acepta `?seccion=` y `?categoria=` para preseleccionar), `/login` y `/admin/usuarios`. Un `beforeEach` global espera a `esperarSesion()` y exige sesión salvo en rutas con `meta.publica`; `meta.soloAdmin` restringe al admin. Sin sesión se redirige a `/login?redirect=…`.
 - Login y sesión: `useSesion` (`src/composables/`) expone el `usuario` actual (`{ id, nombre, esAdmin }` o `null`), `iniciarSesion` y `cerrarSesion`, apoyándose en `authRepository`. Los miembros entran con las cuentas que crea el admin; el administrador principal no es una cuenta guardada, sus credenciales son `VITE_ADMIN_USUARIO` / `VITE_ADMIN_PASSWORD` en `.env.local` (ver `.env.example`; Vite reinicia solo al cambiarlo) y su id es fijo (`ADMIN_ID` en `src/data/adminDemo.ts`). Una sesión cuya cuenta se ha borrado deja de ser válida al recargar.
@@ -51,7 +52,8 @@ Estado actual: demo funcional en Vue 3 + Vite + TypeScript + Vue Router. No hay 
 
 | Categoría | Medidas |
 |---|---|
-| Túnica, Coraza, Pechera, Muñequeras | Ancho y largo (cm) |
+| Túnica | Ancho y largo (cm) + color |
+| Coraza, Pechera, Muñequeras | Ancho y largo (cm) |
 | Escudo | Ancho y largo (cm) |
 | Armamento | Largo (cm) |
 | Cinturón | Largo (cm) |

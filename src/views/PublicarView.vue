@@ -6,13 +6,16 @@ import { useSesion } from '@/composables/useSesion'
 import {
   CATEGORIAS,
   CATEGORIA_INFO,
+  COLORES,
   ESTADOS,
   SECCIONES,
   SECCION_LABEL,
   TALLAS_CASCO,
   isCategoria,
   isSeccion,
+  tieneColor,
   type Categoria,
+  type Color,
   type Estado,
   type Medidas,
   type Seccion,
@@ -39,6 +42,7 @@ const form = reactive({
   largo: '' as NumeroCampo,
   numero: '' as NumeroCampo,
   talla: '' as TallaCasco | '',
+  color: '' as Color | '',
 })
 
 const errores = ref<Partial<Record<keyof typeof form, string>>>({})
@@ -56,6 +60,7 @@ watch(
 )
 
 const tipoMedida = computed(() => (form.categoria ? CATEGORIA_INFO[form.categoria].medida : null))
+const pideColor = computed(() => !!form.categoria && tieneColor(form.categoria))
 
 function esPositivo(valor: NumeroCampo): valor is number {
   return typeof valor === 'number' && Number.isFinite(valor) && valor > 0
@@ -94,8 +99,10 @@ async function publicar() {
   const contacto = form.contacto.trim()
   if (!contacto) errores.value.contacto = 'Indica el nombre de contacto.'
   const medidas = construirMedidas()
+  if (pideColor.value && !form.color) errores.value.color = 'Elige el color.'
 
   if (!form.categoria || !form.estado || !contacto || !medidas) return
+  if (pideColor.value && !form.color) return
   if (!usuario.value) {
     errorGuardar.value = 'Tu sesión ha caducado. Vuelve a iniciar sesión.'
     return
@@ -111,6 +118,7 @@ async function publicar() {
       estado: form.estado,
       contacto,
       medidas,
+      ...(pideColor.value && form.color ? { color: form.color } : {}),
       ...(comentario ? { comentario } : {}),
       publicadaPor: usuario.value.id,
     })
@@ -183,6 +191,15 @@ async function publicar() {
         </div>
         <p v-if="errores.talla" class="error">{{ errores.talla }}</p>
       </fieldset>
+
+      <div v-if="pideColor" class="field">
+        <label for="color">Color</label>
+        <select id="color" v-model="form.color" :aria-invalid="!!errores.color">
+          <option value="" disabled>Elige un color</option>
+          <option v-for="c in COLORES" :key="c" :value="c">{{ c }}</option>
+        </select>
+        <p v-if="errores.color" class="error">{{ errores.color }}</p>
+      </div>
 
       <fieldset class="field">
         <legend>Estado</legend>
