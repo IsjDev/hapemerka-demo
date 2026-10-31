@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Escudo con corona de laurel">
+  <!-- Logo provisional: escudo redondo con corona de laurel. Sustituir por el del grupo. -->
+  <circle cx="32" cy="32" r="31" fill="#c9a24a"/>
+  <circle cx="32" cy="32" r="27.5" fill="#8c2a2a"/>
+  <circle cx="32" cy="32" r="25.5" fill="none" stroke="#c9a24a" stroke-width="0.8" stroke-dasharray="2 2"/>
+  <g fill="#e2c275">
+    <!-- Rama izquierda -->
+    <ellipse cx="32" cy="13" rx="2.4" ry="5" transform="rotate(205 32 32) rotate(-35 32 13)"/>
+    <ellipse cx="32" cy="13" rx="2.4" ry="5" transform="rotate(230 32 32) rotate(-35 32 13)"/>
+    <ellipse cx="32" cy="13" rx="2.4" ry="5" transform="rotate(255 32 32) rotate(-35 32 13)"/>
+    <ellipse cx="32" cy="13" rx="2.4" ry="5" transform="rotate(280 32 32) rotate(-35 32 13)"/>
+    <ellipse cx="32" cy="13" rx="2.4" ry="5" transform="rotate(305 32 32) rotate(-35 32 13)"/>
+    <ellipse cx="32" cy="13" rx="2.4" ry="5" transform="rotate(330 32 32) rotate(-35 32 13)"/>
+    <!-- Rama derecha -->
+    <ellipse cx="32" cy="13" rx="2.4" ry="5" transform="rotate(155 32 32) rotate(35 32 13)"/>
+    <ellipse cx="32" cy="13" rx="2.4" ry="5" transform="rotate(130 32 32) rotate(35 32 13)"/>
+    <ellipse cx="32" cy="13" rx="2.4" ry="5" transform="rotate(105 32 32) rotate(35 32 13)"/>
+    <ellipse cx="32" cy="13" rx="2.4" ry="5" transform="rotate(80 32 32) rotate(35 32 13)"/>
+    <ellipse cx="32" cy="13" rx="2.4" ry="5" transform="rotate(55 32 32) rotate(35 32 13)"/>
+    <ellipse cx="32" cy="13" rx="2.4" ry="5" transform="rotate(30 32 32) rotate(35 32 13)"/>
+  </g>
+  <!-- Umbo central -->
+  <circle cx="32" cy="32" r="8.5" fill="#c9a24a"/>
+  <circle cx="32" cy="32" r="5.5" fill="#e2c275"/>
+  <circle cx="30" cy="30" r="1.8" fill="#f5e3ad"/>
+</svg>

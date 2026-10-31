@@ -1,0 +1,158 @@
+/*
+ * Tokens de color. Paleta provisional (granate, oro y fondo de pergamino):
+ * los componentes solo deben usar estas variables, nunca colores fijos.
+ */
+:root {
+  color-scheme: light;
+  --color-bg: #f5efe4;
+  --color-surface: #fffcf6;
+  --color-surface-muted: #efe5d3;
+  --color-border: #dccdb4;
+  --color-text: #2a1f17;
+  --color-text-muted: #6f5e4d;
+  --color-primary: #8c2a2a;
+  --color-primary-hover: #74201f;
+  --color-on-primary: #fff8ee;
+  --color-accent: #b8862b;
+  --color-on-accent: #1f140a;
+  --color-success: #3d7a3a;
+  --color-danger: #b3261e;
+  --color-focus: #b8862b;
+  --color-header-bg: #5e1b1f;
+  --color-header-text: #fbefd9;
+
+  --radius: 10px;
+  /* Tamaño mínimo de lo que se toca con el dedo y alto de la barra inferior del móvil. */
+  --tap-min: 44px;
+  --tabbar-h: 60px;
+  --shadow: 0 1px 2px rgb(60 30 10 / 8%), 0 4px 14px rgb(60 30 10 / 6%);
+  --shadow-hover: 0 2px 4px rgb(60 30 10 / 10%), 0 10px 24px rgb(60 30 10 / 10%);
+  --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Cinzel', Georgia, 'Times New Roman', serif;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --color-bg: #17120e;
+  --color-surface: #221b15;
+  --color-surface-muted: #2f261e;
+  --color-border: #45382b;
+  --color-text: #f1e8da;
+  --color-text-muted: #b4a48f;
+  --color-primary: #e08a76;
+  --color-primary-hover: #eba08f;
+  --color-on-primary: #1f120d;
+  --color-accent: #d9a94a;
+  --color-on-accent: #1f140a;
+  --color-success: #7fc27a;
+  --color-danger: #ff8a7a;
+  --color-focus: #d9a94a;
+  --color-header-bg: #2a1214;
+  --color-header-text: #f6e6c8;
+  --shadow: 0 1px 2px rgb(0 0 0 / 40%);
+  --shadow-hover: 0 4px 16px rgb(0 0 0 / 50%);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  -webkit-tap-highlight-color: transparent;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+}
+
+/* Evita el retardo y el zoom por doble toque en los controles. */
+a,
+button,
+input,
+select,
+textarea,
+label {
+  touch-action: manipulation;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  letter-spacing: 0.02em;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.container {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left));
+  padding-right: max(16px, env(safe-area-inset-right));
+}
+
+@media (min-width: 900px) {
+  .container {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: var(--tap-min);
+  padding: 8px 16px;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  font: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.btn--primary {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+}
+
+.btn--primary:hover {
+  background: var(--color-primary-hover);
+}
+
+.btn--ghost {
+  background: transparent;
+  border-color: var(--color-border);
+  color: var(--color-text);
+}
+
+.btn--ghost:hover {
+  background: var(--color-surface-muted);
+}
+
+/* Con ratón no hace falta un objetivo táctil tan grande. */
+@media (pointer: fine) {
+  .btn {
+    min-height: 38px;
+  }
+}
