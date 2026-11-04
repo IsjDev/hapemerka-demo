@@ -3,6 +3,7 @@ import { reactive, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useSesion } from '@/composables/useSesion'
 import { MARCA } from '@/config/marca'
+import { CUENTA_DEMO } from '@/data'
 
 const route = useRoute()
 const router = useRouter()
@@ -11,6 +12,13 @@ const { iniciarSesion } = useSesion()
 const form = reactive({ nombre: '', password: '' })
 const error = ref<string | null>(null)
 const entrando = ref(false)
+
+function usarCuentaDemo() {
+  if (!CUENTA_DEMO) return
+  form.nombre = CUENTA_DEMO.nombre
+  form.password = CUENTA_DEMO.password
+  error.value = null
+}
 
 async function entrar() {
   error.value = null
@@ -78,6 +86,19 @@ async function entrar() {
       <button type="submit" class="btn btn--primary submit" :disabled="entrando">
         {{ entrando ? 'Entrando…' : 'Entrar' }}
       </button>
+
+      <aside v-if="CUENTA_DEMO" class="demo">
+        <p class="demo__titulo">Cuenta de prueba</p>
+        <p class="demo__dato">
+          Nombre: <strong>{{ CUENTA_DEMO.nombre }}</strong>
+        </p>
+        <p class="demo__dato">
+          Contraseña: <strong>{{ CUENTA_DEMO.password }}</strong>
+        </p>
+        <button type="button" class="btn btn--ghost demo__usar" @click="usarCuentaDemo">
+          Usar esta cuenta
+        </button>
+      </aside>
     </form>
   </section>
 </template>
@@ -181,6 +202,35 @@ input {
 .btn:disabled {
   opacity: 0.6;
   cursor: progress;
+}
+
+.demo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px;
+  background: var(--color-surface-muted);
+  border-radius: var(--radius);
+  font-size: 0.9rem;
+}
+
+.demo__titulo {
+  margin: 0;
+  font-weight: 600;
+}
+
+.demo__dato {
+  margin: 0;
+  color: var(--color-text-muted);
+}
+
+.demo__dato strong {
+  color: var(--color-text);
+}
+
+.demo__usar {
+  min-height: var(--tap-min);
+  margin-top: 8px;
 }
 
 @media (min-width: 600px) {

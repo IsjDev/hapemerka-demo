@@ -9,6 +9,7 @@ import type { UsuariosRepository } from './usuariosRepository'
 export type { AuthRepository } from './authRepository'
 export type { FiltroPrendas, PrendasRepository } from './prendasRepository'
 export { NombreDuplicadoError, type UsuariosRepository } from './usuariosRepository'
+export { CUENTA_DEMO } from './localStorageDemoSeed'
 
 // Datos de ejemplo del demo; se siembran antes de que nadie lea los repositorios. Desaparece con Supabase.
 sembrarDatosDemo()

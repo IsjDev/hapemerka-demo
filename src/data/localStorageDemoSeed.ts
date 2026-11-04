@@ -26,7 +26,12 @@ const SEMBRADO_KEY = 'hapemerka:demo'
 const PRENDAS_KEY = 'hapemerka:prendas'
 const USUARIOS_KEY = 'hapemerka:usuarios'
 
-export const PASSWORD_DEMO = 'demo123'
+const PASSWORD_DEMO = 'demo123'
+
+// Cuenta de prueba que se muestra en el login; `null` si los datos de ejemplo están desactivados.
+export const CUENTA_DEMO =
+  import.meta.env.VITE_DEMO_DATOS === 'false' ? null : { nombre: 'Aníbal', password: PASSWORD_DEMO }
+
 // Hash precalculado de `demo123` con este salt (mismo esquema que localStorageUsuariosRepository),
 // para poder sembrar de forma síncrona antes de que se recupere la sesión.
 const SALT_DEMO = '6861706564656d6f73656d696c6c6131'
